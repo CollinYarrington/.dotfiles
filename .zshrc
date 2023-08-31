@@ -108,3 +108,10 @@ source $ZSH/oh-my-zsh.sh
 alias ls='ls -a'
 alias a='sail artisan'
 alias sail="[ -f sail ] && sh sail || sh vendor/bin/sail"
+alias zr='omz reload'
+
+# git alias
+alias gch='git checkout'
+alias gcom='git commit -m'
+alias gpush='git push'
+alias gpull='git pull'
