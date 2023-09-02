@@ -113,5 +113,5 @@ alias zr='omz reload'
 # git alias
 alias gch='git checkout'
 alias gcom='git commit -m'
-alias gpush='git push'
-alias gpull='git pull'
+alias gpush='git push origin'
+alias gpull='git pull origin'
