@@ -1,3 +1,5 @@
 [user]
 	email = collin.yarrington@lavalamp.biz
 	name = collin
+[core]
+	editor = vim
