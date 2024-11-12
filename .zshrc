@@ -105,11 +105,16 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-# collins config
-alias ls='ls -a'
-alias a='sail artisan'
-alias sail="[ -f sail ] && sh sail || sh vendor/bin/sail"
+
+# =============== #
+# Collin's Config #
+# =============== #
+
 alias zr='omz reload'
+# Laravel Sail Shortcuts:
+alias a='sail artisan'
+alias ls='ls -a'
+alias sail="[ -f sail ] && sh sail || sh vendor/bin/sail"
 
 # git alias
 alias gch='git checkout'
@@ -119,6 +124,57 @@ alias gpull='git pull'
 
 # docker alias
 alias dworkspace='docker-compose exec workspace bash'
+binto(){
+	
+	local target_dir="$HOME/projects/laradock8.2"
+	echo "Navigating to $target_dir"
+	cd "$target_dir" || { echo "Failed to navigate to $target_dir"; return 1; }
+	echo "\n *========================# Active Docker Containers #========================* \n"
+	
+	containers=($(docker ps --format "{{.Names}}"))
+	# Check if there are any active containers
+    if [[ ${#containers[@]} -eq 0 ]]; then
+		echo "\n 		          No active containers found \n"
+		echo "\n *========================# Active Docker Containers #========================* \n\n"
+		return
+    fi
+
+	local index=1
+	# Display the indexed list of containers
+	for container_name in "${containers[@]}"; do
+		echo "[$index]  ${container_name}"
+		((index++))
+	done
+	
+	echo "\n *========================# Active Docker Containers #========================* \n\n"
+    echo "Please enter the number of the container you want to access (or type 'exit', 'close', or 'bye' to quit):"
+   	read selection
+	selection_lower="${selection:l}"
+
+	if [[ "$selection_lower" == "exit" || "$selection_lower" == "close" || "$selection_lower" == "bye" ]]; then
+		echo "Goodbye 👋"
+	elif [[ "$selection" =~ ^[0-9]+$ ]] && (( selection > 0 && selection <= ${#containers[@]} )); then
+        container_name="${containers[selection]}"
+		echo "You have selected $container_name"
+        docker exec -it $container_name bash
+	else
+		echo "Something went wrong ❌"
+	fi
+}
+
+editzsh(){
+	local target_dir="$HOME/.dotfiles/.zshrc"
+	if [[ -n "$1" ]]; then
+		echo "Attempting to load provided editor"
+		$1 $target_dir
+	else
+		vim $target_dir
+	fi
+
+	return 1
+}
+
+
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
