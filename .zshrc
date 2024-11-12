@@ -72,10 +72,10 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git 
-	artisan
 	npm
 	composer
 	ionic
+	node
 )
 
 source $ZSH/oh-my-zsh.sh
