@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+# Install "zsh" if its not already installed
+if [[ ! $(command -v zsh) ]]; then
+    apt install zsh
+fi
+
+# Install "oh-my-zsh" if its not already installed
+if [[ ! d ~/.oh-my-zsh/plugins ]]; then
+    # See the docs for more info here: https://ohmyz.sh/#install
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
 set -e
 
 CONFIG="install.conf.yaml"
